@@ -2,39 +2,53 @@ package com.rayan.onlinecourses.entity;
 
 import java.util.*;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 // Define the class sas entity
 
 @Entity
-@Table(name = "course")
+@Table(name = "courses")
 public class Course {
 
-    // define fields
-    // @Id
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // @Column(name="course_id")
-    // private Long courseId;
-
-    // @Column(name = "course_name")
-    // private String courseName;
-
-    // private String courseDuration;
-
-    // private String
-    // define contractors
-    // define Getter&Setter
-    // toString()
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "course_id", nullable = false)
     private Long courseId;
+
+    @Basic
+    @Column(name = "course_name", nullable = false, length = 45)
     private String courseName;
+
+    @Basic
+    @Column(name = "course_duration", nullable = false, length = 45)
     private String courseDuration;
+
+    @Basic
+    @Column(name = "course_description", nullable = false, length = 64)
     private String courseDescription;
+
+    // !------------ define Relationships between other Entities ------------!
+    // Each course Can Combine a group or a list of students.
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "enrolled_in", joinColumns = { @JoinColumn(name = "course_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "student_id") })
+    private Set<Student> students = new HashSet<>();
+
+    // Every course can by taught a single Instructor
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "instructor_id", referencedColumnName = "instructor_id", nullable = false)
+    private Instructor instructor;
 
     public Course() {
     }
@@ -47,13 +61,6 @@ public class Course {
         this.students = students;
         this.instructor = instructor;
     }
-
-    // !------------ define Relationships between other Entities ------------!
-    // Each course Can Combine a group or a list of students.
-    private Set<Student> students = new HashSet<>();
-
-    // Every course can by taught a single Instructor
-    private Instructor instructor;
 
     @Override
     public boolean equals(Object o) {
