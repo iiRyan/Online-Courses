@@ -2,18 +2,48 @@ package com.rayan.onlinecourses.entity;
 
 import java.util.*;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "users")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", nullable = false)
     private Long userId;
+
+    @Basic
+    @Column(name = "email", nullable = false, length = 45, unique = true)
     private String email;
+
+    @Basic
+    @Column(name = "password", nullable = false, length = 45)
     private String password;
 
     // !------------ define Relationships between other Entities ------------!
     // Each user has a set of Rolls.
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "role_id") })
     private Set<Role> roles = new HashSet<>();
 
     // Each User can be either student or an Instructor
+    @OneToOne(mappedBy = "user")
     private Student student;
+
+    @OneToOne(mappedBy = "user")
     private Instructor instructor;
 
     public User() {

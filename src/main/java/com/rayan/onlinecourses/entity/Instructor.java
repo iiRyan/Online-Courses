@@ -2,19 +2,48 @@ package com.rayan.onlinecourses.entity;
 
 import java.util.*;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "instructor")
 public class Instructor {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "instructor_id", nullable = false)
     private Long instructorId;
+
+    @Basic
+    @Column(name = "first_name", nullable = false, length = 45)
     private String firstName;
+
+    @Basic
+    @Column(name = "last_name", nullable = false, length = 45)
     private String lastName;
+
+    @Basic
+    @Column(name = "summary", nullable = false, length = 64)
     private String summary;
 
     // !------------ define Relationships between other Entities ------------!
-
     // Instructor will Teach a set of courses.
+    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY)
     private Set<Course> courses = new HashSet<>();
 
     // Each Instructor Is a user.
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private User user;
 
     public Instructor() {
