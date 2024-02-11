@@ -49,11 +49,10 @@ public class Instructor {
     public Instructor() {
     }
 
-    public Instructor(String firstName, String lastName, String summary, Set<Course> courses, User user) {
+    public Instructor(String firstName, String lastName, String summary, User user) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.summary = summary;
-        this.courses = courses;
         this.user = user;
     }
 

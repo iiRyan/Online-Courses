@@ -49,12 +49,9 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password, Set<Role> roles, Student student, Instructor instructor) {
+    public User(String email, String password) {
         this.email = email;
         this.password = password;
-        this.roles = roles;
-        this.student = student;
-        this.instructor = instructor;
     }
 
     public Long getUserId() {
@@ -134,7 +131,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [userId=" + userId + ", email=" + email + ", password=" + password + "]";
+        return "User [userId=" + userId + ", email=" + email + "]";
     }
 
 }

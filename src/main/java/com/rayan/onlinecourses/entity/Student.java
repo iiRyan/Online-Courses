@@ -49,11 +49,10 @@ public class Student {
     public Student() {
     }
 
-    public Student(String firstName, String lastName, String level, Set<Course> courses, User user) {
+    public Student(String firstName, String lastName, String level, User user) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.level = level;
-        this.courses = courses;
         this.user = user;
     }
 
