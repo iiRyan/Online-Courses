@@ -53,12 +53,10 @@ public class Course {
     public Course() {
     }
 
-    public Course(String courseName, String courseDuration, String courseDescription, Set<Student> students,
-            Instructor instructor) {
+    public Course(String courseName, String courseDuration, String courseDescription, Instructor instructor) {
         this.courseName = courseName;
         this.courseDuration = courseDuration;
         this.courseDescription = courseDescription;
-        this.students = students;
         this.instructor = instructor;
     }
 

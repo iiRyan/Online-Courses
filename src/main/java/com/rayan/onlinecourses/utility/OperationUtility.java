@@ -1,13 +1,16 @@
 package com.rayan.onlinecourses.utility;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.yaml.snakeyaml.emitter.EmitterException;
 
+import com.rayan.onlinecourses.dao.CourseDao;
 import com.rayan.onlinecourses.dao.InstructorDao;
 import com.rayan.onlinecourses.dao.RoleDao;
 import com.rayan.onlinecourses.dao.StudentDao;
 import com.rayan.onlinecourses.dao.UserDao;
+import com.rayan.onlinecourses.entity.Course;
 import com.rayan.onlinecourses.entity.Instructor;
 import com.rayan.onlinecourses.entity.Role;
 import com.rayan.onlinecourses.entity.Student;
@@ -190,4 +193,56 @@ public class OperationUtility {
         studentDao.findAll().forEach(student -> System.out.println(student.toString()));
     }
 
+    /* Courses Operations */
+
+    public static void CoursesOperation(CourseDao courseDao, InstructorDao instructorDao, StudentDao studentDao) {
+        createCourse(courseDao, instructorDao);
+        updateCourse(courseDao);
+        deleteCourse(courseDao);
+        fetchCourse(courseDao);
+        assignStudentToCourse(courseDao, studentDao);
+        fetchCourseForStudent(courseDao);
+    }
+
+    private static void createCourse(CourseDao courseDao, InstructorDao instructorDao) {
+
+        Instructor instructor = instructorDao.findById(2L)
+                .orElseThrow(() -> new EntityNotFoundException("Instructor Not Found"));
+
+        Course course = new Course("Hibernate", "5 Hours", "Introduction to Hibernate", instructor);
+        courseDao.save(course);
+
+        Course course2 = new Course("Relational Database", "3.5 Hours", "Database Fundamental", instructor);
+        courseDao.save(course2);
+
+    }
+
+    private static void updateCourse(CourseDao courseDao) {
+        Course course = courseDao.findById(2L).orElseThrow(() -> new EntityNotFoundException("Course Not Found"));
+        course.setCourseDuration("newDuration 99");
+        courseDao.save(course);
+    }
+
+    private static void deleteCourse(CourseDao courseDao) {
+        courseDao.deleteById(2L);
+    }
+
+    private static void fetchCourse(CourseDao courseDao) {
+        courseDao.findAll().forEach(course -> System.out.println(course.toString()));
+    }
+
+    private static void assignStudentToCourse(CourseDao courseDao, StudentDao studentDao) {
+        Optional<Student> student1 = studentDao.findById(2L);
+        Optional<Student> student2 = studentDao.findById(1L);
+        Course course = courseDao.findById(2L).orElseThrow(() -> new EntityNotFoundException("Course Not found"));
+
+        student1.ifPresent(course::assignStudentToCourse);
+        student2.ifPresent(course::assignStudentToCourse);
+
+        courseDao.save(course);
+    }
+
+    private static void fetchCourseForStudent(CourseDao courseDao) {
+        courseDao.getCoursesByStudentId(1L).forEach(course -> System.out.println(course.toString()));
+    }
 }
