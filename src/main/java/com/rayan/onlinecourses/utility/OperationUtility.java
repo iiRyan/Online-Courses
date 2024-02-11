@@ -24,9 +24,9 @@ public class OperationUtility {
     public static void usersOperations(UserDao userDao) {
 
         createUser(userDao);
-        updateUser(userDao);
-        deleteUser(userDao);
-        fetchUser(userDao);
+        // updateUser(userDao);
+        // deleteUser(userDao);
+        // fetchUser(userDao);
     }
 
     private static void createUser(UserDao userDao) {
@@ -55,7 +55,7 @@ public class OperationUtility {
     }
 
     private static void deleteUser(UserDao userDao) {
-        User user = userDao.findById(3L).orElseThrow(() -> new EntityNotFoundException("User Not Found"));
+        User user = userDao.findById(5L).orElseThrow(() -> new EntityNotFoundException("User Not Found"));
         userDao.delete(user);
     }
 
@@ -65,10 +65,10 @@ public class OperationUtility {
 
     /* Role Operations */
     public static void roleOperations(RoleDao roleDao) {
-        createRoles(roleDao);
-        updateRole(roleDao);
-        deleteRole(roleDao);
-        fetchRole(roleDao);
+        // createRoles(roleDao);
+        // updateRole(roleDao);
+        // deleteRole(roleDao);
+        // fetchRole(roleDao);
     }
 
     private static void createRoles(RoleDao roleDao) {
@@ -84,7 +84,7 @@ public class OperationUtility {
 
     private static void updateRole(RoleDao roleDao) {
         Role role = roleDao.findById(1L).orElseThrow(() -> new EmitterException("Role Not Found"));
-        role.setName("newAdmin");
+        role.setName("Admin");
         roleDao.save(role);
     }
 
@@ -111,26 +111,26 @@ public class OperationUtility {
 
     /* Instructor Operations */
     public static void instructorOperations(UserDao userDao, InstructorDao instructorDao, RoleDao roleDao) {
-        createInstructor(userDao, instructorDao, roleDao);
-        updateInstructor(instructorDao);
-        removeInstructor(instructorDao);
-        fetchInstructors(instructorDao);
+        // createInstructor(userDao, instructorDao, roleDao);
+        // updateInstructor(instructorDao);
+        // removeInstructor(instructorDao);
+        // fetchInstructors(instructorDao);
     }
 
     private static void createInstructor(UserDao userDao, InstructorDao instructorDao, RoleDao roleDao) {
-        Role role = roleDao.findByName("instructorDao");
+        Role role = roleDao.findByName("instructor");
         if (role == null)
             throw new EntityNotFoundException("Role Not Found");
 
         User user1 = new User("Abdualziz@gmail.com", "pass123");
-        userDao.save(user1);
         user1.assignRoleToUser(role);
+        userDao.save(user1);
         Instructor instructor1 = new Instructor("Abdualziz", "Alharbi", "Experienced Instructor", user1);
         instructorDao.save(instructor1);
 
         User user2 = new User("Rakan@gmail.com", "pass123");
-        userDao.save(user2);
         user2.assignRoleToUser(role);
+        userDao.save(user2);
         Instructor instructor2 = new Instructor("rakan", "nasser", "Experienced Instructor", user2);
         instructorDao.save(instructor2);
 
@@ -140,6 +140,7 @@ public class OperationUtility {
         Instructor instructor = instructorDao.findById(2L)
                 .orElseThrow(() -> new EntityNotFoundException("Instructor Not Found"));
         instructor.setSummary("Certified Instructor");
+        instructorDao.save(instructor);
     }
 
     private static void removeInstructor(InstructorDao instructorDao) {
@@ -152,9 +153,9 @@ public class OperationUtility {
 
     /* Student Operations */
     public static void studentOperations(UserDao userDao, StudentDao studentDao, RoleDao roleDao) {
-        createStudent(userDao, studentDao, roleDao);
-        updateStudent(studentDao);
-        removeStudent(studentDao);
+        // createStudent(userDao, studentDao, roleDao);
+        // updateStudent(studentDao);
+        // removeStudent(studentDao);
         fetchStudents(studentDao);
     }
 
@@ -163,18 +164,18 @@ public class OperationUtility {
         if (role == null)
             throw new EntityNotFoundException("Role not found");
 
-        User user1 = new User("hesham@gmail.com", "pass123");
-        userDao.save(user1);
+        User user1 = new User("test@gmail.com", "pass123");
         user1.assignRoleToUser(role);
+        userDao.save(user1);
 
-        Student student1 = new Student("hesham", "Adwani", "master", user1);
+        Student student1 = new Student("khalid", "Adwani", "master", user1);
         studentDao.save(student1);
 
-        User user2 = new User("jojo@gmail.com", "pass123");
+        User user2 = new User("test2@gmail.com", "pass123");
+        user2.assignRoleToUser(role);
         userDao.save(user2);
-        user1.assignRoleToUser(role);
 
-        Student student2 = new Student("hesham", "Adwani", "master", user1);
+        Student student2 = new Student("amani", "Adwani", "master", user2);
         studentDao.save(student2);
         user2.assignRoleToUser(role);
     }
@@ -186,7 +187,7 @@ public class OperationUtility {
     }
 
     private static void removeStudent(StudentDao studentDao) {
-        studentDao.deleteById(2L);
+        studentDao.deleteById(5L);
     }
 
     private static void fetchStudents(StudentDao studentDao) {
