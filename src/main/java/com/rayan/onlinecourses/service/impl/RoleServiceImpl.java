@@ -1,10 +1,11 @@
-package com.rayan.onlinecourses.service;
+package com.rayan.onlinecourses.service.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rayan.onlinecourses.dao.RoleDao;
 import com.rayan.onlinecourses.entity.Role;
+import com.rayan.onlinecourses.service.RoleService;
 
 @Service
 @Transactional

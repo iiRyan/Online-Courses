@@ -1,4 +1,4 @@
-package com.rayan.onlinecourses.service;
+package com.rayan.onlinecourses.service.impl;
 
 import java.util.List;
 
@@ -9,6 +9,9 @@ import com.rayan.onlinecourses.dao.InstructorDao;
 import com.rayan.onlinecourses.entity.Course;
 import com.rayan.onlinecourses.entity.Instructor;
 import com.rayan.onlinecourses.entity.User;
+import com.rayan.onlinecourses.service.CourseService;
+import com.rayan.onlinecourses.service.InstructorService;
+import com.rayan.onlinecourses.service.UserService;
 
 import jakarta.persistence.EntityNotFoundException;
 
