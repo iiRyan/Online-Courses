@@ -131,7 +131,7 @@ public class Course {
         theStudent.getCourses().add(this);
     }
 
-    public void removeStudentToCourse(Student theStudent) {
+    public void removeStudentFromCourse(Student theStudent) {
         this.students.remove(theStudent);
         theStudent.getCourses().remove(this);
     }
