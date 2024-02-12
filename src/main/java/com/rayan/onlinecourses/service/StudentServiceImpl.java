@@ -3,6 +3,9 @@ package com.rayan.onlinecourses.service;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.rayan.onlinecourses.dao.StudentDao;
 import com.rayan.onlinecourses.entity.Course;
 import com.rayan.onlinecourses.entity.Student;
@@ -10,6 +13,8 @@ import com.rayan.onlinecourses.entity.User;
 
 import jakarta.persistence.EntityNotFoundException;
 
+@Service
+@Transactional
 public class StudentServiceImpl implements StudentService {
 
     private StudentDao studentDao;
