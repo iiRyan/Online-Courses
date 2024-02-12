@@ -5,6 +5,7 @@ import java.util.List;
 import com.rayan.onlinecourses.dao.InstructorDao;
 import com.rayan.onlinecourses.entity.Course;
 import com.rayan.onlinecourses.entity.Instructor;
+import com.rayan.onlinecourses.entity.User;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -12,10 +13,12 @@ public class InstructorServiceImpl implements InstructorService {
 
     private InstructorDao instructorDao;
     private CourseService courseService;
+    private UserService userService;
 
-    public InstructorServiceImpl(InstructorDao instructorDao, CourseService courseService) {
+    public InstructorServiceImpl(InstructorDao instructorDao, CourseService courseService, UserService userService) {
         this.instructorDao = instructorDao;
         this.courseService = courseService;
+        this.userService = userService;
     }
 
     @Override
@@ -38,7 +41,9 @@ public class InstructorServiceImpl implements InstructorService {
     public Instructor createInstructor(String firstName, String lastName, String summary, String email,
             String password) {
 
-        return instructorDao.save(new Instructor(firstName, lastName, summary, null));
+        User user = userService.createUser(email, password);
+        userService.assignRoleToUser(email, "Instructor");
+        return instructorDao.save(new Instructor(firstName, lastName, summary, user));
     }
 
     @Override
