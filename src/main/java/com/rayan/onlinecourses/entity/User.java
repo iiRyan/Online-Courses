@@ -124,7 +124,7 @@ public class User {
         theRole.getUsers().add(this);
     }
 
-    public void removeRoleToUser(Role theRole) {
+    public void removeRoleFromUser(Role theRole) {
         this.roles.remove(theRole);
         theRole.getUsers().remove(this);
     }

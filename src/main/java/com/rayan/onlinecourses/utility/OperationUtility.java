@@ -65,7 +65,7 @@ public class OperationUtility {
 
     /* Role Operations */
     public static void roleOperations(RoleDao roleDao) {
-        // createRoles(roleDao);
+        createRoles(roleDao);
         // updateRole(roleDao);
         // deleteRole(roleDao);
         // fetchRole(roleDao);
@@ -111,7 +111,7 @@ public class OperationUtility {
 
     /* Instructor Operations */
     public static void instructorOperations(UserDao userDao, InstructorDao instructorDao, RoleDao roleDao) {
-        // createInstructor(userDao, instructorDao, roleDao);
+        createInstructor(userDao, instructorDao, roleDao);
         // updateInstructor(instructorDao);
         // removeInstructor(instructorDao);
         // fetchInstructors(instructorDao);
@@ -153,10 +153,10 @@ public class OperationUtility {
 
     /* Student Operations */
     public static void studentOperations(UserDao userDao, StudentDao studentDao, RoleDao roleDao) {
-        // createStudent(userDao, studentDao, roleDao);
+        createStudent(userDao, studentDao, roleDao);
         // updateStudent(studentDao);
         // removeStudent(studentDao);
-        fetchStudents(studentDao);
+        // fetchStudents(studentDao);
     }
 
     private static void createStudent(UserDao userDao, StudentDao studentDao, RoleDao roleDao) {
@@ -197,11 +197,11 @@ public class OperationUtility {
     /* Courses Operations */
 
     public static void CoursesOperation(CourseDao courseDao, InstructorDao instructorDao, StudentDao studentDao) {
-        createCourse(courseDao, instructorDao);
-        updateCourse(courseDao);
-        deleteCourse(courseDao);
-        fetchCourse(courseDao);
-        assignStudentToCourse(courseDao, studentDao);
+        // createCourse(courseDao, instructorDao);
+        // updateCourse(courseDao);
+        // deleteCourse(courseDao);
+        // fetchCourse(courseDao);
+        // assignStudentToCourse(courseDao, studentDao);
         fetchCourseForStudent(courseDao);
     }
 
@@ -235,7 +235,7 @@ public class OperationUtility {
     private static void assignStudentToCourse(CourseDao courseDao, StudentDao studentDao) {
         Optional<Student> student1 = studentDao.findById(2L);
         Optional<Student> student2 = studentDao.findById(1L);
-        Course course = courseDao.findById(2L).orElseThrow(() -> new EntityNotFoundException("Course Not found"));
+        Course course = courseDao.findById(1L).orElseThrow(() -> new EntityNotFoundException("Course Not found"));
 
         student1.ifPresent(course::assignStudentToCourse);
         student2.ifPresent(course::assignStudentToCourse);

@@ -36,13 +36,6 @@ public class OnlineCoursesApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		// OperationUtility.usersOperations(userDao);
-		// OperationUtility.roleOperations(roleDao);
-		// OperationUtility.assignRoleToUser(userDao, roleDao);
-
-		// OperationUtility.instructorOperations(userDao, instructorDao, roleDao);
-		OperationUtility.studentOperations(userDao, studentDao, roleDao);
-
 	}
 
 }
