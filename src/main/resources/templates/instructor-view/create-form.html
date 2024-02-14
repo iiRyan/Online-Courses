@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Css File  -->
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <title>Create Instructor</title>
+</head>
+
+<body>
+
+    <div layout:fragment="content1">
+        <div class="col-md-6 offset-3 mt-3">
+            <h2>Create New Instructor</h2>
+            <form class="form-control mt-3" th:action="@{save}" method="POST">
+
+
+                <div class="mb-3 mt-3 ">
+                    <label for="firstName" class="form-label">Instructor First Name:</label>
+                    <input type="text" class="form-control" th:field="${instructor.firstName}" required>
+                </div>
+
+                <div class="mb-3 mt-3 ">
+                    <label for="lastName" class="form-label">Instructor Last Name:</label>
+                    <input type="text" class="form-control" th:field="${instructor.lastName}" required>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="summary" class="form-label">Instructor Summary:</label>
+                    <input type="text" class="form-control" th:field="${instructor.summary}">
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" th:field="${instructor.user.email}">
+                    <span class="text-danger" th:errors="${instructor.user.email}"></span>
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" class="form-control" th:field="${instructor.user.password}">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>

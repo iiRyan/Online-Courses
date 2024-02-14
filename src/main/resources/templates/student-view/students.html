@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Css File  -->
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <title>Students</title>
+</head>
+
+<body>
+
+    <div layout:fragment="content1">
+        <div class="container p-5">
+            <div class="card bg-transparent">
+                <div class="card-header bg-dark text-light">List of Students</div>
+                <div class="card-body">
+                    <form action="#" method="get" th:action="@{students/index}">
+                        <p>Add new Students </p>
+                        <a th:href="@{/students/formCreate}">formCreate</a>
+                        <label for="">Keyword</label>
+                        <input type="text" name="keyword" th:value="${keyword}">
+                        <button type="submit" class="btn btn-sm btn-info">Search</button>
+
+                    </form>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Student Id</th>
+                                <th>Student First Name</th>
+                                <th>Student Last Name</th>
+                                <th>Student Level</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="text-center" th:each="student , stat : ${studentsList}">
+
+                                <!-- //<td th:text="${stat.index} + 1"></td> -->
+                                <td th:text="${student.getStudentId()}"></td>
+                                <td th:text="${student.getFirstName()}"></td>
+                                <td th:text="${student.getLastName()}"></td>
+                                <td th:text="${student.getLevel()}"></td>
+                                <td>
+
+                                    <a class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Are you Sure you want to delete the instructor?')"
+                                        th:href="@{/students/delete(studentId=${student.getStudentId()},keyword=${keyword})}">Delete</a>
+                                    <a class="btn btn-info btn-sm"
+                                        th:href="@{/students/formUpdate(studentId=${student.getStudentId()},keyword=${keyword})}">Update</a>
+
+                                </td>
+
+                            </tr>
+                        </tbody>
+
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</body>
+
+</html>

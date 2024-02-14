@@ -1,5 +1,6 @@
 package com.rayan.onlinecourses.service.impl;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -63,13 +64,24 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void removeStudent(Long studentId) {
         Student student = loadStudentById(studentId);
-        // First Remove courses that the student enroll in.
-        Iterator<Course> iterator = student.getCourses().iterator();
-        if (iterator.hasNext()) {
-            Course course = iterator.next();
+        List<Course> coursesCopy = new ArrayList<>(student.getCourses());
+
+        for (Course course : coursesCopy) {
             course.removeStudentFromCourse(student);
         }
+
         studentDao.deleteById(studentId);
     }
+
+    // @Override
+    // public void removeStudent(Long studentId) {
+    // Student student = loadStudentById(studentId);
+    // Iterator<Course> iterator = student.getCourses().iterator();
+    // if(iterator.hasNext()) {
+    // Course course = iterator.next();
+    // course.removeStudentFromCourse(student);
+    // }
+    // studentDao.deleteById(studentId);
+    // }
 
 }

@@ -4,7 +4,7 @@ import com.rayan.onlinecourses.entity.User;
 
 public interface UserService {
 
-    User loadUserBuEmail(String email);
+    User loadUserByEmail(String email);
 
     User createUser(String email, String password);
 

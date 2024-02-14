@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User loadUserBuEmail(String email) {
+    public User loadUserByEmail(String email) {
         return userDao.findByEmail(email);
     }
 

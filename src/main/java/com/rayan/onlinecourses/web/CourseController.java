@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import static com.rayan.onlinecourses.constants.onlineCoursesConstants.COURSES_LIST;
+import static com.rayan.onlinecourses.constants.onlineCoursesConstants.KEYWORD;
+import static com.rayan.onlinecourses.constants.onlineCoursesConstants.INSTRUCTORS_LIST;
+
 import com.rayan.onlinecourses.entity.Course;
 import com.rayan.onlinecourses.entity.Instructor;
 import com.rayan.onlinecourses.service.CourseService;
@@ -33,10 +37,10 @@ public class CourseController {
     /* Controllers */
 
     @GetMapping("/index")
-    public String courses(Model theModel, @RequestParam(name = "keyword", defaultValue = "") String keyword) {
-        List<Course> listCourses = courseService.findCoursesByCourseName(keyword);
-        theModel.addAttribute("listCourses", listCourses);
-        theModel.addAttribute("keyword", keyword);
+    public String courses(Model theModel, @RequestParam(name = KEYWORD, defaultValue = "") String keyword) {
+        List<Course> corsesList = courseService.findCoursesByCourseName(keyword);
+        theModel.addAttribute(COURSES_LIST, corsesList);
+        theModel.addAttribute(KEYWORD, keyword);
 
         return path + "courses";
     }
@@ -55,7 +59,7 @@ public class CourseController {
         List<Instructor> instructors = instructorService.fetchInstructors();
         // set course as a model attribute to pre-populate the form
         theModel.addAttribute("theCourse", course);
-        theModel.addAttribute("listInstructors", instructors);
+        theModel.addAttribute(INSTRUCTORS_LIST, instructors);
 
         return path + "update-form";
     }
@@ -74,7 +78,7 @@ public class CourseController {
     public String updateCourse(Model theModel) {
 
         List<Instructor> instructors = instructorService.fetchInstructors();
-        theModel.addAttribute("listInstructors", instructors);
+        theModel.addAttribute("instructorsList", instructors);
         Course theCourse = new Course();
         theModel.addAttribute("theCourse", theCourse);
 
@@ -87,7 +91,7 @@ public class CourseController {
         List<Course> subscribedCourses = courseService.fetchCourseForStudent(studentId);
         List<Course> otherCourses = courseService.fetchAll().stream()
                 .filter(course -> !subscribedCourses.contains(course)).collect(Collectors.toList());
-        theModel.addAttribute("listCourses", subscribedCourses);
+        theModel.addAttribute(COURSES_LIST, subscribedCourses);
         theModel.addAttribute("otherCourses", otherCourses);
 
         return path + "/student-courses";
@@ -95,9 +99,27 @@ public class CourseController {
 
     @GetMapping("/enrollStudent")
     public String enrollCurrentStudentInCourse(Long courseId) {
-        Long studentId = 4L;
+        Long studentId = 1L;
         courseService.assignStudentToCourse(courseId, studentId);
         return "redirect:/courses/index/student";
 
     }
+
+    @GetMapping("/index/instructor")
+    public String coursesForCurrentInstructor(Model theModel) {
+        Long instructorId = 1L;
+        Instructor instructor = instructorService.loadInstructorById(instructorId);
+        // Get the instructor's Courses.
+        theModel.addAttribute(COURSES_LIST, instructor.getCourses());
+        return path + "instructor-courses";
+    }
+
+    @GetMapping("/instructor")
+    public String coursesByInstructorId(Model theModel, Long instructorId) {
+        Instructor instructor = instructorService.loadInstructorById(instructorId);
+        // Get the instructor's Courses.
+        theModel.addAttribute(COURSES_LIST, instructor.getCourses());
+        return path + "instructor-courses";
+    }
+
 }

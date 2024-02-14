@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Css File  -->
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <title>Update Instructor</title>
+</head>
+
+<body>
+
+    <div layout:fragment="content1">
+        <div class="col-md-6 offset-3 mt-3">
+            <h2>Update Instructor</h2>
+            <form class="form-control mt-3" th:action="@{update}" th:object="${theInstructor}" method="POST">
+
+                <input type="hidden" th:field="*{instructorId}" />
+
+                <div class="mb-3 mt-3 ">
+                    <label for="firstName" class="form-label">First Name:</label>
+                    <input type="text" class="form-control" th:field="*{firstName}">
+                </div>
+
+                <div class="mb-3 mt-3 ">
+                    <label for="lastName" class="form-label">Last Name:</label>
+                    <input type="text" class="form-control" th:field="*{lastName}">
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="summary" class="form-label">Summary:</label>
+                    <input type="text" class="form-control" th:field="*{summary}">
+                </div>
+
+                <label for="">Courses ID</label>
+                <div class="mt-3 mb-3" th:each="course : ${theInstructor.getCourses()}">
+                    <input class="form-control" readonly name="courses"
+                        th:value="${theInstructor.courses[courseStat.index].getCourseId()}">
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="">Associated User Id</label>
+                    <input class="form-control" readonly name="user" th:value="${theInstructor.user.getUserId()}">
+
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
