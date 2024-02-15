@@ -29,7 +29,7 @@ public class User {
     private String email;
 
     @Basic
-    @Column(name = "password", nullable = false, length = 45)
+    @Column(name = "password", nullable = false, length = 60)
     private String password;
 
     // !------------ define Relationships between other Entities ------------!

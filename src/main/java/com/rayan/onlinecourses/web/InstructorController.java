@@ -82,7 +82,7 @@ public class InstructorController {
                 theInstructor.getLastName(),
                 theInstructor.getSummary(), theInstructor.getUser().getEmail(),
                 theInstructor.getUser().getPassword());
-        return "redirect:/instructor/index";
+        return "redirect:/instructors/index";
     }
 
 }
