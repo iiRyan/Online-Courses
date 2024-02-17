@@ -1,7 +1,9 @@
 package com.rayan.onlinecourses.web;
 
+import java.security.Principal;
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,6 +39,7 @@ public class StudentController {
     }
 
     @GetMapping("/index")
+    @PreAuthorize("hasAuthority('Admin')")
     public String students(Model theModel, @RequestParam(name = KEYWORD, defaultValue = "") String keyword) {
         List<Student> studentsList = studentService.findStudentByName(keyword);
         theModel.addAttribute(STUDENTS_LIST, studentsList);
@@ -45,27 +48,31 @@ public class StudentController {
     }
 
     @GetMapping("/delete")
+    @PreAuthorize("hasAuthority('Admin')")
     public String delete(Long studentId, String keyword) {
         studentService.removeStudent(studentId);
         return "redirect:/students/index?keyword" + keyword;
     }
 
     @GetMapping("/formUpdate")
-    public String fromUpdate(Model theModel, Long studentId) {
-        Student student = studentService.loadStudentById(studentId);
+    @PreAuthorize("hasAuthority('Student')")
+    public String fromUpdate(Model theModel, Long studentId, Principal principal) {
+        Student student = studentService.loadStudentByEmail(principal.getName());
         theModel.addAttribute("student", student);
 
         return path + "update-form";
     }
 
     @PostMapping("/update")
+    @PreAuthorize("hasAuthority('Student')")
     public String update(Student student) {
 
         studentService.updateStudent(student);
-        return "redirect:/students/index";
+        return "redirect:/courses/index/student";
     }
 
-    @GetMapping("formCreate")
+    @GetMapping("/formCreate")
+    @PreAuthorize("hasAuthority('Admin')")
     public String formCreate(Model theModel) {
         Student student = new Student();
 
@@ -74,8 +81,8 @@ public class StudentController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasAuthority('Admin')")
     public String save(@Valid Student student, BindingResult bindingResult) {
-
         User user = userService.loadUserByEmail(student.getUser().getEmail());
         if (user != null)
             bindingResult.rejectValue("user.email", null, "Email already Exist");

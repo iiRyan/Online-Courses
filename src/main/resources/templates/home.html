@@ -1,18 +1,54 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="template">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+    layout:decorate="template">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Online Courses</title>
 
-    <!-- Css File  -->
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
     <link rel="stylesheet" th:href="@{/css/style.css}" />
-    <title>Home</title>
 </head>
 
 <body>
-
     <div layout:fragment="content1">
-        </div>
-        </body>
+
+        <!-- Header - set the background image for the header in the line below-->
+        <header class="py-5 bg-image-full" th:style="'background-image: url('+@{/img/home.jpg}+');'">
+            <div class="text-center my-5">
+                <img class="img-fluid rounded-circle mb-4" style="height: 150px; width: 150px;"
+                    th:src="@{/img/home.jpg}" alt="..." />
+                <h1 class="text-white fs-3 fw-bolder">Online Courses</h1>
+                <p class="text-white-50 mb-0">SpringMVC Project</p>
+            </div>
+        </header>
+
+        <!-- Content section-->
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h2>Welcome to My Spring MVC Project</h2>
+                        <p class="lead">Explore the features and functionalities of my project.</p>
+                        <p class="mb-0">Thank you for visiting! Feel free to navigate through the different sections to
+                            learn more about what my project has to offer.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container">
+                <a class="m-0 text-center text-white" href="https://github.com/iiRyan/Online-Courses"> <img
+                        src="/img/github.png" alt="" style="height: 50px;"></a>
+            </div>
+        </footer>
+
+</body>
+
 </html>

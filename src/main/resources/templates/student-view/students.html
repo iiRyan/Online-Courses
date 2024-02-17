@@ -18,11 +18,18 @@
                 <div class="card-header bg-dark text-light">List of Students</div>
                 <div class="card-body">
                     <form action="#" method="get" th:action="@{students/index}">
-                        <p>Add new Students </p>
-                        <a th:href="@{/students/formCreate}">formCreate</a>
-                        <label for="">Keyword</label>
-                        <input type="text" name="keyword" th:value="${keyword}">
-                        <button type="submit" class="btn btn-sm btn-info">Search</button>
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <a class="btn btn-success btn-sm" th:href="@{/students/formCreate}">Add new
+                                    Student</a>
+                            </div>
+                            <div>
+                                <label for="">Keyword</label>
+                                <input type="text" name="keyword" th:value="${keyword}">
+                                <button type="submit" class="btn btn-sm btn-info">Search</button>
+
+                            </div>
+                        </div>
 
                     </form>
                     <table class="table table-striped">

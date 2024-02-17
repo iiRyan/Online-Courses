@@ -1,7 +1,9 @@
 package com.rayan.onlinecourses.web;
 
+import java.security.Principal;
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,6 +34,7 @@ public class InstructorController {
     }
 
     @GetMapping("/index")
+    @PreAuthorize("hasAuthority('Admin')")
     public String instructors(@RequestParam(name = KEYWORD, defaultValue = "") String keyword, Model theModel) {
 
         List<Instructor> instructorsList = instructorService.findInstructorByName(keyword);
@@ -42,25 +45,29 @@ public class InstructorController {
     }
 
     @GetMapping("/delete")
+    @PreAuthorize("hasAuthority('Admin')")
     public String deleteInstructor(Long instructorId, String keyword) {
         instructorService.removeInstructor(instructorId);
-        return "redirect:/instructor/index?keyword" + keyword;
+        return "redirect:/instructors/index?keyword" + keyword;
     }
 
     @GetMapping("/formUpdate")
-    public String formUpdate(Model theModel, Long instructorId) {
-        Instructor theInstructor = instructorService.loadInstructorById(instructorId);
+    @PreAuthorize("hasAuthority('Instructor')")
+    public String updateInstructor(Model theModel, Long instructorId, Principal principal) {
+        Instructor theInstructor = instructorService.findInstructorByEmail(principal.getName());
         theModel.addAttribute("theInstructor", theInstructor);
         return path + "update-form";
     }
 
     @PostMapping("/update")
+    @PreAuthorize("hasAuthority('Instructor')")
     public String saveUpdate(Instructor theInstructor) {
         instructorService.updateInstructor(theInstructor);
-        return "redirect:/instructor/index";
+        return "redirect:/courses/index/instructor";
     }
 
     @GetMapping("/formCreate")
+    @PreAuthorize("hasAuthority('Admin')")
     public String createForm(Model theModel) {
 
         theModel.addAttribute("instructor", new Instructor());
@@ -69,6 +76,7 @@ public class InstructorController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasAuthority('Admin')")
     public String save(@Valid Instructor theInstructor, BindingResult bindingResult) {
         // I had weird problem , When i use theInstructor in the view
         // the validation doesn't work! unless i change it into Instructor!
