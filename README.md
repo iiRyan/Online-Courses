@@ -12,7 +12,6 @@ This project is a learning resource and a demonstration of a Spring MVC applicat
   <li>Spring MVC</li>
   <li>Spring Data JPA</li>
   <li>Spring Security</li>
-  <li>Spring Data JPA</li>
   <li>MySQL</li>
 </ul>
 
