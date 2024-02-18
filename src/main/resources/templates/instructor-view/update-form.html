@@ -35,14 +35,14 @@
                     <input type="text" class="form-control" th:field="*{summary}">
                 </div>
 
-                <label for="">Courses ID</label>
+               
                 <div class="mt-3 mb-3" th:each="course : ${theInstructor.getCourses()}">
-                    <input class="form-control" readonly name="courses"
+                    <input type="hidden" class="form-control" readonly name="courses"
                         th:value="${theInstructor.courses[courseStat.index].getCourseId()}">
                 </div>
                 <div class="mb-3 mt-3">
-                    <label for="">Associated User Id</label>
-                    <input class="form-control" readonly name="user" th:value="${theInstructor.user.getUserId()}">
+                   
+                    <input type="hidden" class="form-control" readonly name="user" th:value="${theInstructor.user.getUserId()}">
 
                 </div>
 
