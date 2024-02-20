@@ -13,7 +13,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to bottom right, #EEE, #AAA);
+  background: #1D809F;
 }
 
 h1 {

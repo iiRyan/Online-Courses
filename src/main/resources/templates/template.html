@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -15,93 +15,106 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-    <!-- Css File  -->
-    <link rel="stylesheet" th:href="@{/css/coustome.css}" />
-
+    <!-- Core CSS-->
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
 
 
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" th:href="@{/}">Online Courses</a>
+
+            <!-- Navbar toggler button for mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar"
+                aria-controls="mynavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
             <div class="collapse navbar-collapse" id="mynavbar">
                 <ul class="navbar-nav me-auto">
-
-                    <!-- Courses -->
+                    <!-- Courses Dropdown -->
                     <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Courses</a>
-
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" th:href="@{/courses/index}"
                                     sec:authorize="hasAuthority('Admin')">Search</a></li>
                             <li><a class="dropdown-item" th:href="@{/courses/formCreate}"
                                     sec:authorize="hasAnyAuthority('Admin','Instructor')">New Course</a></li>
-
                             <li><a class="dropdown-item" th:href="@{/courses/index/student}"
                                     sec:authorize="hasAuthority('Student')">Student Courses</a></li>
-
                             <li><a class="dropdown-item" th:href="@{/courses/index/instructor}"
                                     sec:authorize="hasAuthority('Instructor')">My Courses</a></li>
-
-
                         </ul>
                     </li>
 
-                    <li class="nav-item dropdown" sec:authorize="isAuthenticated() && hasAuthority('Admin') ">
+                    <!-- Instructors Dropdown -->
+                    <li class="nav-item dropdown" sec:authorize="isAuthenticated() && hasAuthority('Admin')">
                         <a class="nav-link dropdown-toggle" href="#" role="button"
                             data-bs-toggle="dropdown">Instructors</a>
-                        <!-- Instructors -->
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" th:href="@{/instructors/index}">Search</a></li>
                             <li><a class="dropdown-item" th:href="@{/instructors/formCreate}">New Instructor</a></li>
                         </ul>
                     </li>
-                    <!-- Students -->
-                    <li class="nav-item dropdown" sec:authorize="isAuthenticated() && hasAuthority('Admin') ">
+
+                    <!-- Students Dropdown -->
+                    <li class="nav-item dropdown" sec:authorize="isAuthenticated() && hasAuthority('Admin')">
                         <a class="nav-link dropdown-toggle" href="#" role="button"
                             data-bs-toggle="dropdown">Students</a>
-
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" th:href="@{/students/index}">Search</a></li>
                             <li><a class="dropdown-item" th:href="@{/students/formCreate}">New Students</a></li>
                         </ul>
                     </li>
-
-                    <!-- Login & Logout Section  -->
                 </ul>
+
                 <ul class="navbar-nav">
+                    <!-- User Dropdown -->
                     <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                             <span class="text-white  fw-bolder" sec:authentication="name"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- Instructor update profile -->
-                            <li sec:authorize="hasAuthority('Instructor') "><a th:href="@{/instructors/formUpdate}"
+                            <li sec:authorize="hasAuthority('Instructor')"><a th:href="@{/instructors/formUpdate}"
                                     class="dropdown-item">Update Profile</a></li>
                             <!-- Student update profile -->
-                            <li sec:authorize="hasAuthority('Student') "><a th:href="@{/students/formUpdate}"
+                            <li sec:authorize="hasAuthority('Student')"><a th:href="@{/students/formUpdate}"
                                     class="dropdown-item">Update Profile</a></li>
-                            <li><a th:href="@{/logout}" class="dropdown-item">Logout</a></li>
+                            <li>
+                                <form action="#" th:action="@{/logout}" method="POST">
+                                    <input class="dropdown-item" sec:authorize="isAuthenticated()" type="submit"
+                                        value="Logout" />
+                                </form>
+                            </li>
                         </ul>
-
-
                     </li>
 
+                    <!-- Login Button -->
                     <li class="nav-item dropdown" sec:authorize="isAnonymous()">
                         <a class="nav-link" th:href="@{/login}">Login</a>
                     </li>
-
                 </ul>
-
             </div>
         </div>
     </nav>
+
     <section layout:fragment="content1">
 
     </section>
+    <!-- Footer -->
+    <footer class="page-footer font-small blue">
 
+        <!-- Copyright -->
+        <div class="footer-copyright bg-dark text-center text-light py-4">
+            <a href=""><img src="/img/github.png" style="height: 35px; width: 35px;" alt=""></a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
 
 </body>
 

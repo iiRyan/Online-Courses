@@ -16,14 +16,16 @@ public class SecurityConfiguration {
                 http
                                 .authorizeHttpRequests(authz -> authz
                                                 .requestMatchers("/").permitAll()
+                                                .requestMatchers("/css/**", "img/**").permitAll()
                                                 .anyRequest().authenticated())
-                                .formLogin(form -> form
-                                                .defaultSuccessUrl("/", true))
+                                .formLogin(form -> form.loginPage("/login")
+                                                .loginProcessingUrl("/authenticationTheUser")
+                                                .defaultSuccessUrl("/", true)
+                                                .permitAll())
                                 .logout(logout -> logout
                                                 .logoutUrl("/logout")
                                                 .logoutSuccessUrl("/"))
-                                .exceptionHandling(configurer -> configurer
-                                                .accessDeniedPage("/access-denied"));
+                                .exceptionHandling(configurer -> configurer.accessDeniedPage("/access-denied"));
 
                 // Redirect to the default page after logout
 
